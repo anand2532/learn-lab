@@ -5,8 +5,11 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-center mb-8">
           Welcome to Learn Lab
         </h1>
-        <p className="text-center text-lg">
+        <p className="text-center text-lg mb-4">
           A full-stack Next.js project with TypeScript, Tailwind CSS, and more.
+        </p>
+        <p className="text-center text-sm text-gray-600">
+          Server is running successfully!
         </p>
       </div>
     </main>
