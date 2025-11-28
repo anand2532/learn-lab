@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package learnlab.course.v1;
+
+option go_package = "github.com/learnlab/proto/course/v1;coursev1";
+
+import "google/api/annotations.proto";
+
+service CourseService {
+  rpc GetCourse(GetCourseRequest) returns (GetCourseResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/courses/{id}"
+    };
+  }
+  rpc ListCourses(ListCoursesRequest) returns (ListCoursesResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/courses"
+    };
+  }
+  rpc CreateCourse(CreateCourseRequest) returns (CreateCourseResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/courses"
+      body: "*"
+    };
+  }
+  rpc UpdateCourse(UpdateCourseRequest) returns (UpdateCourseResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/courses/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteCourse(DeleteCourseRequest) returns (DeleteCourseResponse) {
+    option (google.api.http) = {
+      delete: "/api/v1/courses/{id}"
+    };
+  }
+  rpc GetTopics(GetTopicsRequest) returns (GetTopicsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/courses/{course_id}/topics"
+    };
+  }
+  rpc GetSubtopics(GetSubtopicsRequest) returns (GetSubtopicsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/topics/{topic_id}/subtopics"
+    };
+  }
+}
+
+message GetCourseRequest {
+  string id = 1;
+}
+
+message GetCourseResponse {
+  Course course = 1;
+}
+
+message ListCoursesRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListCoursesResponse {
+  repeated Course courses = 1;
+  int32 total = 2;
+}
+
+message CreateCourseRequest {
+  string title = 1;
+  string description = 2;
+  string slug = 3;
+}
+
+message CreateCourseResponse {
+  Course course = 1;
+}
+
+message UpdateCourseRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+message UpdateCourseResponse {
+  Course course = 1;
+}
+
+message DeleteCourseRequest {
+  string id = 1;
+}
+
+message DeleteCourseResponse {
+  bool success = 1;
+}
+
+message GetTopicsRequest {
+  string course_id = 1;
+}
+
+message GetTopicsResponse {
+  repeated Topic topics = 1;
+}
+
+message GetSubtopicsRequest {
+  string topic_id = 1;
+}
+
+message GetSubtopicsResponse {
+  repeated Subtopic subtopics = 1;
+}
+
+message Course {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string slug = 4;
+  repeated Topic topics = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message Topic {
+  string id = 1;
+  string course_id = 2;
+  string title = 3;
+  string description = 4;
+  int32 order_index = 5;
+  repeated Subtopic subtopics = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message Subtopic {
+  string id = 1;
+  string topic_id = 2;
+  string title = 3;
+  string content = 4;
+  string code_example = 5;
+  bool has_3d = 6;
+  int32 order_index = 7;
+  string created_at = 8;
+  string updated_at = 9;
+}
+

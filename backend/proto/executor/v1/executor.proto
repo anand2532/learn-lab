@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package learnlab.executor.v1;
+
+option go_package = "github.com/learnlab/proto/executor/v1;executorv1";
+
+import "google/api/annotations.proto";
+
+service ExecutorService {
+  rpc ExecuteCode(ExecuteCodeRequest) returns (ExecuteCodeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/execute"
+      body: "*"
+    };
+  }
+  rpc ExecuteCodeStream(ExecuteCodeRequest) returns (stream ExecuteCodeStreamResponse);
+  rpc GetExecutionStatus(GetExecutionStatusRequest) returns (GetExecutionStatusResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/execute/{execution_id}"
+    };
+  }
+}
+
+message ExecuteCodeRequest {
+  string code = 1;
+  string language = 2;
+  string user_id = 3;
+  int32 timeout_seconds = 4;
+  int64 memory_limit_mb = 5;
+}
+
+message ExecuteCodeResponse {
+  string execution_id = 1;
+  string output = 2;
+  string error = 3;
+  int32 execution_time_ms = 4;
+  string status = 5;
+}
+
+message ExecuteCodeStreamResponse {
+  string chunk = 1;
+  bool is_error = 2;
+  bool is_complete = 3;
+}
+
+message GetExecutionStatusRequest {
+  string execution_id = 1;
+}
+
+message GetExecutionStatusResponse {
+  string execution_id = 1;
+  string output = 2;
+  string error = 3;
+  string status = 4;
+  int32 execution_time_ms = 5;
+}
+

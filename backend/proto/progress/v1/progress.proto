@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package learnlab.progress.v1;
+
+option go_package = "github.com/learnlab/proto/progress/v1;progressv1";
+
+import "google/api/annotations.proto";
+
+service ProgressService {
+  rpc UpdateProgress(UpdateProgressRequest) returns (UpdateProgressResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/progress"
+      body: "*"
+    };
+  }
+  rpc GetProgress(GetProgressRequest) returns (GetProgressResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/progress"
+    };
+  }
+  rpc StreamProgress(StreamProgressRequest) returns (stream StreamProgressResponse);
+  rpc GetAnalytics(GetAnalyticsRequest) returns (GetAnalyticsResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/progress/analytics"
+    };
+  }
+}
+
+message UpdateProgressRequest {
+  string user_id = 1;
+  string course_id = 2;
+  string topic_id = 3;
+  string subtopic_id = 4;
+  bool completed = 5;
+  int32 progress_percentage = 6;
+}
+
+message UpdateProgressResponse {
+  bool success = 1;
+  Progress progress = 2;
+}
+
+message GetProgressRequest {
+  string user_id = 1;
+  string course_id = 2;
+}
+
+message GetProgressResponse {
+  repeated Progress progress = 1;
+}
+
+message StreamProgressRequest {
+  string user_id = 1;
+  string course_id = 2;
+}
+
+message StreamProgressResponse {
+  Progress progress = 1;
+}
+
+message GetAnalyticsRequest {
+  string user_id = 1;
+}
+
+message GetAnalyticsResponse {
+  int32 total_courses = 1;
+  int32 completed_courses = 2;
+  int32 total_topics = 3;
+  int32 completed_topics = 4;
+  double average_progress = 5;
+}
+
+message Progress {
+  string id = 1;
+  string user_id = 2;
+  string course_id = 3;
+  string topic_id = 4;
+  string subtopic_id = 5;
+  bool completed = 6;
+  int32 progress_percentage = 7;
+  string last_accessed_at = 8;
+}
+
