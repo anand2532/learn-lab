@@ -1,0 +1,11 @@
+* Landing experince will be for three type of persona;
+    * Skimmers/Early beginners
+        * cheatsheet content
+        * Early conceptual video
+        * History of AI and LLMs 
+    * Learner and Builders
+        * Educational contest
+        * Industrial Help
+        * Hands on LAB work
+        * 
+    * Reserchers 

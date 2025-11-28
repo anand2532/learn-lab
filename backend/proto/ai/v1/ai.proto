@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package learnlab.ai.v1;
+
+option go_package = "github.com/learnlab/proto/ai/v1;aiv1";
+
+import "google/api/annotations.proto";
+
+service AIService {
+  rpc GetHelp(GetHelpRequest) returns (GetHelpResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/ai/help"
+      body: "*"
+    };
+  }
+  rpc AnalyzeCode(AnalyzeCodeRequest) returns (AnalyzeCodeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/ai/analyze-code"
+      body: "*"
+    };
+  }
+  rpc ExplainConcept(ExplainConceptRequest) returns (ExplainConceptResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/ai/explain-concept"
+      body: "*"
+    };
+  }
+  rpc GenerateExercise(GenerateExerciseRequest) returns (stream GenerateExerciseResponse);
+}
+
+message GetHelpRequest {
+  string question = 1;
+  string context = 2;
+  string user_id = 3;
+}
+
+message GetHelpResponse {
+  string answer = 1;
+  repeated string suggestions = 2;
+}
+
+message AnalyzeCodeRequest {
+  string code = 1;
+  string language = 2;
+  string user_id = 3;
+}
+
+message AnalyzeCodeResponse {
+  string analysis = 1;
+  repeated string suggestions = 2;
+  int32 score = 3;
+}
+
+message ExplainConceptRequest {
+  string concept = 1;
+  string context = 2;
+  string user_id = 3;
+}
+
+message ExplainConceptResponse {
+  string explanation = 1;
+  repeated string examples = 2;
+}
+
+message GenerateExerciseRequest {
+  string topic = 1;
+  string difficulty = 2;
+  string user_id = 3;
+}
+
+message GenerateExerciseResponse {
+  string chunk = 1;
+  bool is_complete = 2;
+}
+
