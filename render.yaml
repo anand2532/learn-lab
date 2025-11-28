@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: learn-lab
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXTAUTH_URL
+        sync: false  # Set this in Render dashboard to your app URL (e.g., https://learn-lab.onrender.com)
+      - key: NEXTAUTH_SECRET
+        sync: false  # Generate with: openssl rand -base64 32
+      - key: GOOGLE_CLIENT_ID
+        sync: false  # Optional - set if using Google OAuth
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false  # Optional - set if using Google OAuth
+    healthCheckPath: /login
+

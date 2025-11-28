@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    serverActions: true,
-  },
+  // Skip static optimization for auth-related pages
+  // They will be server-rendered instead
 }
 
 module.exports = nextConfig

@@ -29,6 +29,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# user data (contains passwords - should not be committed)
+/data/users.json
+
 # vercel
 .vercel
 
